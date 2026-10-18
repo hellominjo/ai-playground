@@ -5,7 +5,7 @@ AI 도구와 일하는 방식을 직접 실험하고 그 과정에서 배운 내
 - **Next.js 15** (App Router) + **Nextra 4** (`nextra-theme-docs`)
 - 콘텐츠는 **MDX**로 작성하고, 디자인은 `app/globals.css`에서 마크다운 구조로 제작
 
-## 실행
+## Getting Started
 
 ```bash
 npm install
@@ -14,7 +14,7 @@ npm run build
 npm run start   
 ```
 
-## 프로젝트 구조
+## Project Structure
 
 ```
 app/
@@ -38,7 +38,7 @@ mdx-components.tsx          # Nextra MDX 컴포넌트 연결
 next.config.ts              # Nextra 플러그인 설정
 ```
 
-### 레이아웃 구조
+### Layout
 
 Nextra `Layout`은 루트 `app/layout.tsx`가 아니라 **영역별 `layout.tsx`에서 `components/SiteLayout`으로** 적용합니다.
 
@@ -50,17 +50,15 @@ Nextra `Layout`은 루트 `app/layout.tsx`가 아니라 **영역별 `layout.tsx`
 `app/_meta.ts`에서 섹션 폴더를 `type: 'page'`로 등록하면 사이드바가 섹션별로 분리됩니다.
 
 
-## 개발 환경
+## Environment
 
-| 항목 | 버전 / 내용 |
-|---|---|
-| Node.js | 24.19.0 |
-| npm | 11.17.0 |
-| Next.js | 15.5.28 (App Router) |
-| React | 19.3.1 |
-| Nextra / nextra-theme-docs | 4.6.1 |
-| TypeScript | 5 |
-| Tailwind CSS | 4 (`@tailwindcss/postcss`) |
-| ESLint | 9 (`eslint-config-next`) |
-| OS | Windows 11 |
-| 에디터 | VS Code |
+- Node.js 24.19.0
+- npm 11.17.0
+- Next.js 15.5.28 (App Router)
+- React 19.3.1
+- Nextra / nextra-theme-docs 4.6.1
+- TypeScript 5
+- Tailwind CSS 4 (`@tailwindcss/postcss`)
+- ESLint 9 (`eslint-config-next`)
+- OS: Windows 11
+- 에디터: VS Code
