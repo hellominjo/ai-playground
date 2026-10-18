@@ -1,26 +1,902 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Pretendard Variable", Pretendard, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* 스크롤바 유무에 따른 가로 흔들림 방지 */
+html {
+  scrollbar-gutter: stable;
+}
+
+/*
+  헤더 전체 높이 = Navbar 64 + TopNav 44 + 테두리 1
+  Nextra가 사이드바/TOC sticky 위치, 앵커 스크롤 위치 계산에 사용.
+  Nextra style.css의 html { --nextra-navbar-height: 64px } 보다 우선하도록
+  :root:root 로 선택자 우선순위를 높임 (CSS 로드 순서와 무관하게 적용)
+*/
+:root:root {
+  --nextra-navbar-height: 109px;
+}
+
+/* Navbar 자체 높이는 64px 유지 (Nextra가 위 변수를 inline height로 사용) */
+.nextra-navbar > nav {
+  height: 64px !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: transparent;
+  border-bottom: 1px solid var(--x-color-gray-200);
+}
+
+.dark .site-header {
+  border-bottom-color: var(--x-color-neutral-800);
+}
+
+/* site-header */
+.site-header .nextra-navbar-blur {
+  border-bottom: none;
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 17px;
+  font-weight: 600;
+  /* font-family: Arial, Helvetica, sans-serif; */
+}
+
+.site-brand svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.site-brand-author {
+  margin-left: 2px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.05rem;
+  opacity: 0.65;
+  white-space: nowrap;
+}
+
+/* Top Nav */
+.top-nav {
+  /* Navbar(.nextra-navbar-blur)와 동일한 반투명 배경 + 블러 */
+  background-color: color-mix(in oklab, var(--x-color-nextra-bg) 70%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+nav .top-nav {
+  border-top : none !important;
+}
+
+.top-nav-inner {
+  display: flex;
+  align-items: stretch;
+  gap: 28px;
+  height: 44px;
+  max-width: 1440px;  
+  margin: 0 auto;
+  padding: 0 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.top-nav a {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 2px solid transparent;
+  color: #6b7280;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.top-nav a:hover {
+  color: #111827;
+}
+
+.top-nav a.active {
+  color: #111827;
+  font-weight: 600;
+  border-bottom-color: #0074ff;
+}
+
+.dark .top-nav a {
+  color: var(--x-color-neutral-400);
+}
+
+.dark .top-nav a:hover,
+.dark .top-nav a.active {
+  color: var(--x-color-gray-50);
+}
+
+/* Not Found */
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 220px);
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.not-found-code {
+  font-size: 88px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #111827;
+  user-select: none;
+}
+
+.not-found-title {
+  margin-top: 24px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.not-found-desc {
+  margin-top: 8px;
+  font-size: 15px;
+  color: #6b7280;
+}
+
+.not-found-actions {
+  margin-top: 32px;
+}
+
+.not-found-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.15s;
+}
+
+.not-found-btn.primary {
+  background: transparent;
+  border: 1px solid var(--x-color-gray-200);
+  color: #111827;
+}
+
+.not-found-btn.primary:hover {
+  background: var(--x-color-gray-100);
+}
+
+.not-found-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+  margin-top: 40px;
+  padding-top: 24px;
+}
+
+.not-found-links a {
+  font-size: 13px;
+  color: #6b7280;
+  transition: color 0.15s;
+}
+
+.not-found-links a:hover {
+  color: #111827;
+}
+
+.dark .not-found-code,
+.dark .not-found-title,
+.dark .not-found-links a:hover {
+  color: var(--x-color-gray-50);
+}
+
+.dark .not-found-btn.primary {
+  border-color: var(--x-color-neutral-800);
+  color: var(--x-color-gray-50);
+}
+
+.dark .not-found-btn.primary:hover {
+  background: var(--x-color-neutral-800);
+}
+
+.dark .not-found-desc,
+.dark .not-found-links a {
+  color: var(--x-color-neutral-400);
+}
+
+.dark .not-found-links {
+  border-top-color: var(--x-color-neutral-800);
+}
+
+/* 모바일: 본문 좌우 여백을 Navbar/TopNav(24px)와 맞춤 (Nextra 기본 16px) */
+@media (max-width: 767px) {
+  article.x\:px-4 {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/*
+  Cards (MDX)
+  리스트 항목 하나 = 카드 하나. 항목 안 문단 순서대로
+  1. 카테고리  2. **[제목](링크)**  3. 설명  4. 태그
+*/
+article ul:has(> li > p:nth-child(4)) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin: 32px 0 0;
+  list-style: none;
+}
+
+article ul:has(> li > p:nth-child(4)) > li {
+  position: relative;
+  margin: 0;
+  padding: 36px 28px 28px;
+  border: 1px solid var(--x-color-gray-200);
+  border-radius: 8px;
+  transition: border-color 0.15s;
+}
+
+article ul:has(> li > p:nth-child(4)) > li:hover {
+  border-color: var(--x-color-gray-300);
+}
+
+article ul:has(> li > p:nth-child(4)) > li > p {
+  margin: 0;
+}
+
+/* 1. 카테고리 */
+article ul:has(> li > p:nth-child(4)) > li > p:nth-child(1) {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+/* 2. 제목 (카드 전체 클릭 영역) */
+article ul:has(> li > p:nth-child(4)) > li > p:nth-child(2) {
+  margin-top: 16px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* **굵게** 표기가 600 위에 한 번 더 굵어지지 않도록 */
+article ul:has(> li > p:nth-child(4)) > li > p:nth-child(2) strong {
+  font-weight: inherit;
+}
+
+article ul:has(> li > p:nth-child(4)) > li > p:nth-child(2) a {
+  color: inherit;
+  text-decoration: none;
+}
+
+article ul:has(> li > p:nth-child(4)) > li > p:nth-child(2) a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* 3. 설명 */
+article ul:has(> li > p:nth-child(4)) > li > p:nth-child(3) {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: #4b5563;
+}
+
+/* 4. 태그 */
+article ul:has(> li > p:nth-child(4)) > li > p:nth-child(4) {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--x-color-gray-200);
+  font-size: 11px;
+  color: #0074ff;
+}
+
+@media (max-width: 767px) {
+  article ul:has(> li > p:nth-child(4)) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dark article ul:has(> li > p:nth-child(4)) > li,
+.dark article ul:has(> li > p:nth-child(4)) > li > p:nth-child(4) {
+  border-color: var(--x-color-neutral-800);
+}
+
+.dark article ul:has(> li > p:nth-child(4)) > li:hover {
+  border-color: var(--x-color-neutral-700);
+}
+
+.dark article ul:has(> li > p:nth-child(4)) > li > p:nth-child(2) {
+  color: var(--x-color-gray-50);
+}
+
+.dark article ul:has(> li > p:nth-child(4)) > li > p:nth-child(3) {
+  color: var(--x-color-neutral-400);
+}
+
+/*
+  Next Step (MDX)
+  `---` 바로 다음 리스트: 1. **라벨** 보조문구  2. [링크](...)
+*/
+article hr + ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  list-style: none;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+article hr + ul > li {
+  margin: 0;
+}
+
+article hr + ul strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #4b5563;
+}
+
+article hr + ul > li:last-child a {
+  font-size: 17px;
+  color: #111827;
+  text-decoration: none;
+}
+
+article hr + ul > li:last-child a::after {
+  content: "→";
+  margin-left: 20px;
+  transition: margin-left 0.15s;
+}
+
+article hr + ul > li:last-child a:hover::after {
+  margin-left: 26px;
+}
+
+.dark article hr + ul strong,
+.dark article hr + ul {
+  color: var(--x-color-neutral-400);
+}
+
+.dark article hr + ul > li:last-child a {
+  color: var(--x-color-gray-50);
+}
+
+/* Article 하단: Last updated + 이전/다음 링크 (SiteFooter와 같은 톤) */
+article > main + div {
+  margin: 48px 0 0;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+article > div.x\:border-t.x\:pt-8 {
+  margin: 16px 0 0;
+  padding: 20px 0;
+  border-color: var(--x-color-gray-200);
+}
+
+article > div.x\:border-t.x\:pt-8 a {
+  padding: 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: #6b7280;
+}
+
+article > div.x\:border-t.x\:pt-8 a:hover {
+  color: #111827;
+}
+
+article > div.x\:border-t.x\:pt-8 a svg {
+  height: 14px;
+}
+
+.dark article > main + div,
+.dark article > div.x\:border-t.x\:pt-8 a {
+  color: var(--x-color-neutral-400);
+}
+
+.dark article > div.x\:border-t.x\:pt-8 {
+  border-color: var(--x-color-neutral-800);
+}
+
+.dark article > div.x\:border-t.x\:pt-8 a:hover {
+  color: var(--x-color-gray-50);
+}
+
+/* Footer */
+.site-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 28px 24px;
+  border-top: 1px solid var(--x-color-gray-200);
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.site-footer-brand {
+  margin-right: 16px;
+  color: #4b5563;
+}
+
+.site-footer-top:hover {
+  color: #111827;
+}
+
+.dark .site-footer-inner {
+  border-top-color: var(--x-color-neutral-800);
+  color: var(--x-color-neutral-400);
+}
+
+.dark .site-footer-brand,
+.dark .site-footer-top:hover {
+  color: var(--x-color-gray-50);
+}
+
+/* Sidebar: 그룹 라벨 (_meta의 type: 'separator') */
+.nextra-sidebar li.\[word-break\:break-word\] {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827; /* TopNav 선택 메뉴와 동일 */
+}
+
+.dark .nextra-sidebar li.\[word-break\:break-word\] {
+  color: var(--x-color-gray-50);
+}
+
+/*
+  # 제목 → 메타 문단 → 소개 문단 → > 인용(배울 내용 박스) → ## 단계(자동 번호)
+*/
+.guide article {
+  counter-reset: guide-step;
+}
+
+/* 메타: 초급 · 약 20분 · 개발 도구 */
+.guide article h1 + p {
+  margin-top: 24px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* 소개 */
+.guide article h1 + p + p {
+  margin-top: 32px;
+  font-size: 16px;
+  color: #374151;
+}
+
+/* 배울 내용 박스 */
+.guide article blockquote {
+  margin-top: 40px;
+  padding: 24px 28px;
+  border: 1px solid var(--x-color-gray-200);
+  border-radius: 8px;
+  background: var(--x-color-gray-50);
+  font-style: normal;
+  color: #374151;
+}
+
+.guide article blockquote strong {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.guide article blockquote ul {
+  margin: 16px 0 0;
+  list-style: none;
+}
+
+.guide article blockquote li {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.guide article blockquote li::before {
+  content: "✓";
+  margin-right: 12px;
+  color: #0074ff;
+}
+
+/*
+  단계 번호: 01, 02, ... (제목 기준 세로 중앙)
+*/
+.guide article:has(blockquote) h2 {
+  display: flex;
+  align-items: center;
+}
+
+.guide article:has(blockquote) h2::before {
+  counter-increment: guide-step;
+  content: counter(guide-step, decimal-leading-zero);
+  margin-right: 14px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #6b7280;
+}
+
+/*
+  Quick Start 
+*/
+.guide article:not(:has(blockquote)) h2 + p {
+  margin-top: 24px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.guide article:not(:has(blockquote)) h2 + p + p {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.guide article:not(:has(blockquote)) h2 + p + p + p {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.guide article:not(:has(blockquote)) h2 + p + p + p + p {
+  margin-top: 20px;
+}
+
+.guide article:not(:has(blockquote)) h2 + p + p + p + p a {
+  color: #0074ff;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.dark .guide article:not(:has(blockquote)) h2 + p {
+  color: var(--x-color-gray-50);
+}
+
+.dark .guide article:not(:has(blockquote)) :is(h2 + p + p, h2 + p + p + p) {
+  color: var(--x-color-neutral-400);
+}
+
+.dark .guide article h1 + p + p,
+.dark .guide article blockquote {
+  color: var(--x-color-neutral-400);
+}
+
+.dark .guide article blockquote {
+  border-color: var(--x-color-neutral-800);
+  background: color-mix(in oklab, var(--x-color-neutral-800) 30%, transparent);
+}
+
+.dark .guide article blockquote strong {
+  color: var(--x-color-gray-50);
+}
+
+/*
+  Home (app/(home)/layout.tsx 의 .home 범위)
+  - ## 아래 ### 는 01, 02 … 자동 번호
+  - 리스트 항목 = 카드: 1. 라벨  2. **제목**  3. 설명
+*/
+.home article h2 {
+  counter-reset: home-step;
+}
+
+.home article h3 {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  font-size: 20px;
+}
+
+.home article h3::before {
+  counter-increment: home-step;
+  content: counter(home-step, decimal-leading-zero);
+  margin-right: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.home article h3 + p {
+  margin-top: 16px;
+  font-size: 15px;
+  color: #4b5563;
+}
+
+.home article ul:has(> li > p:nth-child(3)) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin: 24px 0 0;
+  list-style: none;
+}
+
+.home article ul:has(> li > p:nth-child(3)) > li {
+  margin: 0;
+  padding: 32px 20px 28px;
+  border: 1px solid var(--x-color-gray-200);
+  border-radius: 8px;
+}
+
+.home article ul:has(> li > p:nth-child(3)) > li > p {
+  margin: 0;
+}
+
+/* 1. 라벨: 01 / DISCOVERY */
+.home article ul:has(> li > p:nth-child(3)) > li > p:nth-child(1) {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+/* 2. 제목 */
+.home article ul:has(> li > p:nth-child(3)) > li > p:nth-child(2) {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #111827;
+}
+
+/* 3. 설명 */
+.home article ul:has(> li > p:nth-child(3)) > li > p:nth-child(3) {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #4b5563;
+}
+
+@media (max-width: 767px) {
+  .home article ul:has(> li > p:nth-child(3)) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dark .home article ul:has(> li > p:nth-child(3)) > li {
+  border-color: var(--x-color-neutral-800);
+}
+
+.dark .home article ul:has(> li > p:nth-child(3)) > li > p:nth-child(2) {
+  color: var(--x-color-gray-50);
+}
+
+.dark .home article h3 + p,
+.dark .home article ul:has(> li > p:nth-child(3)) > li > p:nth-child(3) {
+  color: var(--x-color-neutral-400);
+}
+
+/*
+  Home 메뉴 표 (마크다운 표, 헤더 행은 숨김)
+  | [메뉴](링크) | 설명 |  → 행 전체 클릭, hover 시 파란 메뉴명 + 오른쪽 →
+*/
+.home article table {
+  display: table;
+  width: 100%;
+  margin-top: 40px;
+  border-collapse: collapse;
+}
+
+.home article table thead {
+  display: none;
+}
+
+.home article table tr {
+  position: relative;
+  border: 0;
+  background: transparent;
+}
+
+.home article table td {
+  border: 0;
+  padding: 24px 0;
+  font-size: 15px;
+  color: #111827;
+}
+
+.home article table td:first-child {
+  width: 190px;
+  font-weight: 600;
+}
+
+.home article table td:first-child a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 행 전체를 링크 영역으로 */
+.home article table td:first-child a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.home article table tr:hover td:first-child a {
+  color: #0074ff;
+}
+
+.home article table td:last-child::after {
+  content: "→";
+  float: right;
+  color: #6b7280;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.home article table tr:hover td:last-child::after {
+  opacity: 1;
+}
+
+.dark .home article table td {
+  color: var(--x-color-gray-50);
+}
+
+.dark .home article table td:last-child::after {
+  color: var(--x-color-neutral-400);
+}
+
+@media (max-width: 767px) {
+  .home article table td:first-child {
+    width: 120px;
+  }
+}
+
+/*
+  섹션 대표 페이지(page.mdx)의 breadcrumb 중복 제거
+  루트 섹션을 추가하면 _meta의 title 과 같은 이름으로 한 줄씩 추가
+*/
+.nextra-breadcrumb > [title="AI Tools"] ~ :is(svg:has(+ [title="AI Tools"]), [title="AI Tools"]),
+.nextra-breadcrumb > [title="Quick Start"] ~ :is(svg:has(+ [title="Quick Start"]), [title="Quick Start"]) {
+  display: none;  
+}
+
+/* Breadcrumb 현재 페이지(마지막 항목): Nextra 기본 검정 → gray-600 */
+.nextra-breadcrumb > :last-child {
+  color: var(--x-color-gray-500) !important;
+  font-weight: 400 !important;
+}
+
+.dark .nextra-breadcrumb > :last-child {
+  color: var(--x-color-gray-400);
+}
+
+/* Article: breadcrumb ↔ 제목 간격 */
+article .nextra-breadcrumb ~ main > h1:first-child {
+  margin-top: 32px;
+}
+
+/* Article: h2 (Nextra 기본 30px) */
+article h2 {
+  margin-top: 56px;
+  padding-bottom: 12px;
+  font-size: 25px;
+}
+
+/* TOC (On This Page) */
+/* .home-toc-title: 홈 전용 On This Page (components/HomeToc.tsx) */
+.nextra-toc > div > p,
+.nextra-toc .home-toc-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: normal;
+  color: #111827;
+}
+
+.nextra-toc ul {
+  padding-top: 20px;
+}
+
+.nextra-toc .home-toc-title {
+  padding-top: 8px;
+}
+
+.nextra-toc ul li {
+  margin: 0 0 10px;
+}
+
+.nextra-toc ul a {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #6b7280;
+}
+
+.dark .nextra-toc > div > p,
+.dark .nextra-toc .home-toc-title {
+  color: var(--x-color-gray-50);
+}
+
+.dark .nextra-toc ul a {
+  color: var(--x-color-neutral-400);
+}
+
+/* 선택된 링크: 왼쪽 사이드바 #0074ff */
+:is(.nextra-sidebar, .nextra-mobile-nav) a.x\:text-primary-800 {
+  color: #0074ff;
+}
+
+/*
+  On This Page 현재 섹션: components/TocScrollSpy.tsx 가 붙이는 data-active 기준
+  (Nextra 기본 활성 표시 .x:text-primary-600 은 무시)
+*/
+.nextra-toc ul a.x\:text-primary-600:not([data-active]) {
+  color: #6b7280;
+}
+
+.dark .nextra-toc ul a.x\:text-primary-600:not([data-active]) {
+  color: var(--x-color-neutral-400);
+}
+
+.nextra-toc ul a[data-active] {
+  color: #0074ff;
+  font-weight: 600;
+}
+
+/* Sidebar: 홈 페이지 링크(AI Playground)는 그룹 제목과 같은 색 (배포 시 href = /ai-playground/) */
+:is(.nextra-sidebar, .nextra-mobile-nav) :is(a[href="/"], a[href="/ai-playground/"]).x\:text-primary-800 {
+  color: #111827;
+}
+
+.dark :is(.nextra-sidebar, .nextra-mobile-nav) :is(a[href="/"], a[href="/ai-playground/"]).x\:text-primary-800 {
+  color: var(--x-color-gray-50);
+}
+
+/* Sidebar: 페이지 섹션 목록(홈) — 들여쓰기·세로선·# 아이콘 제거 */
+.nextra-sidebar li > ul {
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+.nextra-sidebar li > ul::before {
+  display: none;
+}
+
+.nextra-sidebar li > ul a[href^="#"]::before {
+  display: none;
+}
+
+/* 섹션 목록의 현재 섹션: TocScrollSpy 의 data-active 기준 (Nextra 기본 활성 표시는 무시) */
+.nextra-sidebar li > ul a[href^="#"]:not([data-active]) {
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.dark .nextra-sidebar li > ul a[href^="#"]:not([data-active]) {
+  color: var(--x-color-neutral-400);
+}
+
+.nextra-sidebar li > ul a[href^="#"][data-active] {
+  color: #0074ff;
+  font-weight: 600;
+}
+
+/* Navbar: _meta의 type: 'page' 링크 숨김 (TopNav가 대신함) */
+.nextra-navbar .nextra-scrollbar {
+  display: none;
+}
+
+/* Sidebar: 메뉴 배경 제거 */
+:is(.nextra-sidebar, .nextra-mobile-nav) .x\:bg-primary-100 {
+  background-color: transparent;
 }
